@@ -1,9 +1,4 @@
----
-title: "TidyData"
-author: "Trina Dey"
-date: "21/05/2020"
-output: html_document
----
+# Tidy Data
 
 This repository contains code for reading, cleaning, filtering, structuring and aggregating data as part of Data Science Specialization Course 3. Please read the description below about the project. Please read CodeBook.md for futher info related to the data output generated. Files contained in this project - 
 
