@@ -2,10 +2,10 @@
 
 This repository contains code for reading, cleaning, filtering, structuring and aggregating data as part of Data Science Specialization Course 3. Please read the description below about the project. Please read CodeBook.md for futher info related to the data output generated. Files contained in this project - 
 
-a. README.md to describe the project.
-b. load_data.R to download the input files.
-c. run_analysis.R to run analysis on the files.
-d. CodeBook.md to describe the output files.
+1. README.md to describe the project.
+2. load_data.R to download the input files.
+3. run_analysis.R to run analysis on the files.
+4. CodeBook.md to describe the output files.
 
 **Note**: we have not uploaded any data file because all of them can be generated on the go by running the script. However as part of code completion, only output file has been uploaded.
 
@@ -16,14 +16,14 @@ The data that has been provided as part of the assignment contains training and 
 
 As part of this project two scripts has been created 
 
-a. load_data.R
-b. run_analysis.R
+1. load_data.R
+2. run_analysis.R
 
 load_data.R performs following operations - 
 
-a. Downloads the zip from the url mentioned and stores the zip with name *SamsungData.zip* in a folder named *data* within your working directory. This will download data only when it cant find the zip file. This stops the program to download the data multiple times. 
+1. Downloads the zip from the url mentioned and stores the zip with name *SamsungData.zip* in a folder named *data* within your working directory. This will download data only when it cant find the zip file. This stops the program to download the data multiple times. 
 
-b. Unzips the SamsungData.zip into *SamsungData* in the *data* folder. Also since unzipping takes time, it's also unzipped only once. 
+2. Unzips the SamsungData.zip into *SamsungData* in the *data* folder. Also since unzipping takes time, it's also unzipped only once. 
 
 If by any chance you corrupt any of the data files, you can simply delete the *SamsungData* Folder inside the data folder and run the analysis again or run the load_data function again and it will unzip the fresh data again into the folders.
 
@@ -33,14 +33,14 @@ run_analysis.R sources the load_data.R file. It completes the five steps mention
 ##### Preprocessing Steps
 Data has been read into data frames from csv files. The data files read into data frames are -  
 
-a. *train_data* - Training data has been read from X_train.txt file.
-b. *test_data* - Test data has been read from X_test.txt file.
-c. *train_labels* - Training Activity Data has been read from y_train.txt file.
-d. *test_labels* - Test Activity Data has been read from y_test.txt file. 
-e. *activity_labels* - Data in training and test activity labels contains only label id. The defintion of these label ids is read from activity_labels.txt file.
-f. *features* - Data in training and test set doesnt have any header. The vector in feature.txt file is the rows in data files.
-g. *train_subjects* - Data for training Subjects has been read from subjects_train.txt file.
-h. *test_subjects* - Data for test Subjects has been read from subjects_test.txt file.
+1. *train_data* - Training data has been read from X_train.txt file.
+2. *test_data* - Test data has been read from X_test.txt file.
+3. *train_labels* - Training Activity Data has been read from y_train.txt file.
+4. *test_labels* - Test Activity Data has been read from y_test.txt file. 
+5. *activity_labels* - Data in training and test activity labels contains only label id. The defintion of these label ids is read from activity_labels.txt file.
+6. *features* - Data in training and test set doesnt have any header. The vector in feature.txt file is the rows in data files.
+7. *train_subjects* - Data for training Subjects has been read from subjects_train.txt file.
+8. *test_subjects* - Data for test Subjects has been read from subjects_test.txt file.
 
 Second thing done is provided some column names to the data frames since none of the files had header names defined in it. 
 
@@ -53,23 +53,23 @@ d. Data Frame *train_data* and *test_data* have many columns and each row in the
 ##### Analysis of the data frames 
 1. First step is to merge the data. So we did these two processes - 
 
-a. Merged each measurement data with their corresponding activity data and subject data using *cbind()* function. Note that *cbind* functions throws an error if the number of rows mismatches between the data frames. Since the data for which we have no subject id or activity is of no use to us, so we have truncated the *train_data* and *test_data* set to number of rows of *test_labels* data frame has.
+    a. Merged each measurement data with their corresponding activity data and subject data using *cbind()* function. Note that *cbind* functions throws an error if the number of rows mismatches between the data frames. Since the data for which we have no subject id or activity is of no use to us, so we have truncated the *train_data* and *test_data* set to number of rows of *test_labels* data frame has.
 
-```
-    test_data <- cbind(test_data[1:nrow(test_labels),] , test_labels , test_subjects)
-    train_data <- cbind(train_data[1:nrow(train_labels),] , train_labels , train_subjects)
+    ```
+        test_data <- cbind(test_data[1:nrow(test_labels),] , test_labels , test_subjects)
+        train_data <- cbind(train_data[1:nrow(train_labels),] , train_labels , train_subjects)
     
-```
+    ```
 
-b. Merged the training and test data frames using *rbind()*. Since the number of columns were mismatched this would also throw an error but a lot of columns has no names so we dont need them. So we truncated the rows of columns to number of rows features have and the last two columns we added in the above step - activity and subjectId.
+   b. Merged the training and test data frames using *rbind()*. Since the number of columns were mismatched this would also throw an error but a lot of columns has no names so we dont need them. So we truncated the rows of columns to number of rows features have and the last two columns we added in the above step - activity and subjectId.
 
-```
-    last_col_test <- ncol(test_data)
-    last_col_train <- ncol(train_data)
-    merged_data <- rbind (train_data[,c(1:nrow(features) , last_col_train -1 , last_col_train)] 
+    ```
+        last_col_test <- ncol(test_data)
+        last_col_train <- ncol(train_data)
+        merged_data <- rbind (train_data[,c(1:nrow(features) , last_col_train -1 , last_col_train)] 
                           , test_data [,c(1:nrow(features),last_col_test -1 , last_col_test)])
 
-```
+    ```
 
 **Note**: We didnt use the merge function because a lot of columns were not named and their names were marked NA. So merge function would have merged the NA named columns as well which we didnt need. 
 
