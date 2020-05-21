@@ -64,7 +64,7 @@ run_analysis <- function() {
     
     #Step5 finding average of all by subject id and activity and writing into a file
     final_data <-  merged_data %>% group_by(activity, subjectId) %>% summarise_if(is.numeric, mean, na.rm=TRUE) 
-    write.table(final_data , "data/output.csv", col.names=TRUE, row.names= FALSE,na= "NA" , sep = ",")
+    write.table(final_data , "data/output.txt", col.names=TRUE, row.names= FALSE,na= "NA" , sep = ",")
 }
 
 

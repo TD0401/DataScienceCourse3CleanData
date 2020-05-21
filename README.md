@@ -31,7 +31,7 @@ If by any chance you corrupt any of the data files, you can simply delete the *S
 run_analysis.R sources the load_data.R file. It completes the five steps mentioned in the assigment. But before running the analysis we need to do some preprocessing. There are three types of data present in the data downloaded viz. Activity Data, Subject Ids, Measurement data. All three data relates to each other hence these three data need to be merged. Also, there is some training data and some test data that needs to be merged. 
 
 ##### Preprocessing Steps
-Data has been read into data frames from csv files. The data files read into data frames are -  
+Data has been read into data frames from txt files. The data files read into data frames are -  
 
 1. *train_data* - Training data has been read from X_train.txt file.
 2. *test_data* - Test data has been read from X_test.txt file.
@@ -84,7 +84,7 @@ d. Data Frame *train_data* and *test_data* have many columns and each row in the
 
 ```
 
-**Note**: We created a merged_data which will take additional memory ideally we should free up the memory by updating the train_data itself while merging and freeing up the test_data data frame. For large data set efficiency would matter. But for now we kept the data set as is.
+**Note**: We created a merged_data which will take additional memory ideally we should free up the memory by updating the *train_data* itself while merging and freeing up the *test_data* data frame. For large data set efficiency would matter. But for now we kept the data set as is for readability purpose.
 
 3. Third step was to provide descriptive name for acitivity id in the data frame. So used *mutate* function from package *dplyr* and updated the existing column of *merged_data* by mapping the id in each row within that column to the row number of *activity_labels* thereby fetching the name from *activity_labels* data frame.
 
@@ -100,11 +100,11 @@ d. Data Frame *train_data* and *test_data* have many columns and each row in the
 
 ```
 
-5. Final Step is to find the average of each measurement by activity name and subject id. So we used *group_by* , *summarise_if* from package *dplyr* and chained them to create our final data which we then wrote in the output.csv file in data folder.
+5. Final Step is to find the average of each measurement by activity name and subject id. So we used *group_by* , *summarise_if* from package *dplyr* and chained them to create our final data which we then wrote in the output.txt file in data folder.
 
 ```
     final_data <-  merged_data %>% group_by(activity, subjectId) %>% summarise_if(is.numeric, mean, na.rm=TRUE) 
-    write.table(final_data , "data/output.csv", col.names=TRUE, row.names= FALSE,na= "NA" , sep = ",")
+    write.table(final_data , "data/output.txt", col.names=TRUE, row.names= FALSE,na= "NA" , sep = ",")
 
 ```
 
