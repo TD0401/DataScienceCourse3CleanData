@@ -1,5 +1,7 @@
                                         DATA DICTIONARY - FITNESS DATA
-<table >
+
+<table class="border-width:0px;">
+  <th>Column Name</th> <th>Data Length</th>
 <tr><td>activity</td><td>18</td></tr>
 
 <tr><td colspan="2">
